@@ -1,15 +1,14 @@
 package com.hj.tj.gohome.service.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.api.WxMaUserService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.hj.tj.gohome.config.WxMaConfiguration;
+import com.hj.tj.gohome.config.jwt.TokenHelper;
 import com.hj.tj.gohome.enums.ErrorMsgEnum;
 import com.hj.tj.gohome.exception.CustomException;
 import com.hj.tj.gohome.mapper.OwnerMapper;
 import com.hj.tj.gohome.service.OwnerService;
-import com.hj.tj.gohome.utils.JwtUtil;
 import com.hj.tj.gohome.vo.login.WxLoginReqObj;
 import com.hj.tj.gohome.vo.login.WxLoginResObj;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Resource
     private OwnerMapper ownerMapper;
+
+    @Resource
+    private TokenHelper tokenHelper;
 
     @Override
     public WxLoginResObj login(WxLoginReqObj wxLoginReqObj) throws Exception{
@@ -41,7 +43,8 @@ public class OwnerServiceImpl implements OwnerService {
         WxLoginResObj wxLoginResObj = new WxLoginResObj();
         wxLoginResObj.setId(1);
         wxLoginResObj.setNickname("唐杰");
-        wxLoginResObj.setSid(JwtUtil.encode(1));
+
+        wxLoginResObj.setSid(tokenHelper.generate(1, "", ""));
 
         return wxLoginResObj;
     }
