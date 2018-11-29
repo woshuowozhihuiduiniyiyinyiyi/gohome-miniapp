@@ -8,19 +8,22 @@ wx:
           aesKey: Dx5LcP76CvL0JOE5jmqjNExAV2uAYIwhgbpv390itN7
           msgDataFormat: JSON
 
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.hj.tj.gohome.entity
+  global-config:
+    id-type: 0
 
-auth.jwt.secret: ed92792d87d629d84cf589c5acfe257f
-auth.jwt.expire: 2592000
-auth.jwt.header: 22f4830ec0a499683c117136444bb6b6
+auth:
+  jwt:
+    secret: ed92792d87d629d84cf589c5acfe257f
+    expire: 2592000
+    header: 22f4830ec0a499683c117136444bb6b6
 
 #默认使用配置
 spring:
   profiles:
     active: dev
-
-mybatis:
-  typeAliasesPackage: com.hj.tj.gohome.entity
-  mapperLocations: classpath:mapper/*.xml
 
 ---
 #开发配置
