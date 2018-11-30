@@ -1,15 +1,20 @@
 package com.hj.tj.gohome.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@TableName("owner")
 public class Owner {
 
     /**
      * id
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -61,11 +66,11 @@ public class Owner {
     /**
      * 创建日期
      */
-    private Date createDate;
+    private Date createdAt;
 
     /**
      * 更新日期
      */
-    private Date updateDate;
+    private Date updatedAt;
 
 }

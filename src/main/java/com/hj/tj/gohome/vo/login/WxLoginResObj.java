@@ -23,4 +23,9 @@ public class WxLoginResObj implements Serializable {
      * sid
      */
     private String sid;
+
+    /**
+     * 头像
+     */
+    private String avatarUrl;
 }

@@ -1,5 +1,6 @@
 package com.hj.tj.gohome;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hj.tj.gohome.entity.Owner;
 import com.hj.tj.gohome.mapper.OwnerMapper;
 import org.junit.Test;
@@ -35,5 +36,14 @@ public class OwnerServiceTest {
         ownerMapper.insert(owner);
 
         System.out.println(owner.getId());
+    }
+
+    @Test
+    public void testSelect(){
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("open_id", "123456");
+        Owner owner = ownerMapper.selectOne(queryWrapper);
+
+        System.out.println(owner);
     }
 }

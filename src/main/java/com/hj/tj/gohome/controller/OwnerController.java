@@ -15,22 +15,17 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/wechat/api")
+@RequestMapping("/api")
 public class OwnerController {
 
     @Resource
     private OwnerService ownerService;
 
     @PostMapping("/user/login")
-    public JsonResponse login(@RequestBody ApiRequest apiRequest){
+    public JsonResponse login(@RequestBody ApiRequest apiRequest) throws Exception {
         WxLoginReqObj wxLoginReqObj = JSONUtils.toBean(apiRequest.getData(), WxLoginReqObj.class);
 
-        WxLoginResObj wxLoginResObj = null;
-        try {
-            wxLoginResObj = ownerService.login(wxLoginReqObj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        WxLoginResObj wxLoginResObj = ownerService.login(wxLoginReqObj);
 
         return JsonResponse.newOk(wxLoginResObj);
     }
