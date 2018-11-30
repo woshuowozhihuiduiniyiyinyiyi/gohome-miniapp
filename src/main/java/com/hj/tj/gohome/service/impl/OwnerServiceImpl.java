@@ -28,9 +28,11 @@ public class OwnerServiceImpl implements OwnerService {
     @Resource
     private TokenHelper tokenHelper;
 
+    @Resource
+    private WxMaService wxMaService;
+
     @Override
     public WxLoginResObj login(WxLoginReqObj wxLoginReqObj) throws Exception {
-        WxMaService wxMaService = WxMaConfiguration.getWxMaService();
         WxMaJscode2SessionResult session = wxMaService.getUserService().getSessionInfo(wxLoginReqObj.getCode());
 
         WxMaUserInfo userInfo = wxMaService.getUserService().getUserInfo(session.getSessionKey(),

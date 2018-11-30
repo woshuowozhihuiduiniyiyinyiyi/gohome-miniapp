@@ -6,6 +6,7 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.WxMaInMemoryConfig;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
@@ -14,12 +15,15 @@ import com.google.common.collect.Maps;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
  */
 @Configuration
 @EnableConfigurationProperties(WxMaProperties.class)
+@ConditionalOnClass(WxMaService.class)
 public class WxMaConfiguration {
     private final WxMaMessageHandler templateMsgHandler = (wxMessage, context, service, sessionManager) ->
             service.getMsgService().sendTemplateMsg(WxMaTemplateMessage.builder()
@@ -127,6 +132,34 @@ public class WxMaConfiguration {
                 }).collect(Collectors.toMap(s -> s.getWxMaConfig().getAppid(), a -> a));
 
         return Boolean.TRUE;
+    }
+
+    @Bean
+    public WxMaConfig config() {
+        List<WxMaProperties.Config> configs = this.properties.getConfigs();
+        WxMaProperties.Config a = configs.get(0);
+
+        WxMaInMemoryConfig config = new WxMaInMemoryConfig();
+        config.setAppid(a.getAppid());
+        config.setSecret(a.getSecret());
+        config.setToken(a.getToken());
+        config.setAesKey(a.getAesKey());
+        config.setMsgDataFormat(a.getMsgDataFormat());
+
+        return config;
+    }
+
+    /**
+     * 初始化微信服务
+     *
+     * @param configStorage 微信小程序配置
+     * @return 微信服务
+     */
+    @Bean
+    public WxMaService wxMaService(WxMaConfig configStorage) {
+        WxMaService service = new WxMaServiceImpl();
+        service.setWxMaConfig(configStorage);
+        return service;
     }
 
     private WxMaMessageRouter newRouter(WxMaService service) {
