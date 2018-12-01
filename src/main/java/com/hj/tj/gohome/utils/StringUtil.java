@@ -18,30 +18,6 @@ public class StringUtil {
     // 手机号正则
     public static String PHONE_REGEX = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
 
-    public static void main(String[] args) {
-        /*
-        System.out.println(true == isMatchHoldWord("xxx fuCk", "Fuck"));
-		System.out.println(true == isMatchHoldWord("xxx fuck,", "fuck"));
-		System.out.println(false == isMatchHoldWord("xfuck,", "fuck"));
-		System.out.println(false == isMatchHoldWord("xxxfuck,", "fuck"));
-		System.out.println(false == isMatchHoldWord("xxxFuck,", "fuck"));
-		System.out.println(true == isMatchHoldWord("xxx Fuck,", "fuck"));
-		System.out.println(true ==isMatchHoldWord("xxx fuCk,", "fuck"));
-		System.out.println(true == isMatchHoldWord("xxx fuCk,", "Fuck"));
-		System.out.println(false == isMatchHoldWord("xxx fuCk,", "Fuck you"));
-		System.out.println(false ==isMatchHoldWord("xxx fuCkyou,", "Fuck you"));
-		System.out.println(true == isMatchHoldWord("xxx fuCk you,", "Fuck you"));
-		System.out.println(false == isMatchHoldWord("xxx fuCk youadfa", "Fuck you"));
-        System.out.println(true == isMatchHoldWord("fuck you", "fuck"));
-		System.out.println(true == isMatchHoldWord("fuck\n", "fuck"));System.out.println(true == isMatchHoldWord("fuck\n\n", "fuck"));
-		System.out.println(true == isMatchHoldWord("fuck\n\n", "fuck"));
-		*/
-//		System.out.println(true == isMatchHoldWordEn("<p><span style=\"background-color: rgb(236, 245, 255); color: rgb(96, 98, 102);\">Sehat</span></p ><p><br></p ><p><br></p ><p><span style=\"background-color: rgb(236, 245, 255); color: rgb(96, 98, 102);\">Sehat</span></p ><p><br></p ><p><br></p ><p><span style=\"background-color: rgb(236, 245, 255); color: rgb(96, 98, 102);\"><span class=\"ql-cursor\">\uFEFF</span></span></p >"
-//				.replaceAll("<[^>]*>", " "), "Sehat"));
-//        boolean validIdCardNo = isValidIdCardNo("420682199103013098");
-////        System.out.println(validIdCardNo);
-    }
-
     public static String format(String pattern, Date date) {
         return new SimpleDateFormat(pattern).format(date);
     }
@@ -275,21 +251,6 @@ public class StringUtil {
         Pattern pattern = Pattern.compile("(\\W|^)" + target.trim() + "(\\W|$)", Pattern.CASE_INSENSITIVE);
         return pattern.matcher(source).find();
     }
-
-//    public static boolean isMatchHoldWord(String source, String target, ClientLangEnum lang) {
-//        if (StringUtils.isBlank(target)) {
-//            return false;
-//        }
-//
-//        switch (lang) {
-//            case ZH:
-//                return StringUtils.containsIgnoreCase(source, target);
-//            case USA:
-//            case INDONESIA:
-//            default:
-//                return isMatchHoldWordEn(source, target);
-//        }
-//    }
 
     public static String chineseNameMask(String name) {
         if (name.length() <= 1) {

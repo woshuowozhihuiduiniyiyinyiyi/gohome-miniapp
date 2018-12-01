@@ -9,9 +9,18 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class WxLoginReqObj {
 
+    /**
+     * 微信code
+     */
     private String code;
 
+    /**
+     * 用户微信数据
+     */
     private String encryptedData;
 
+    /**
+     * 用户iv
+     */
     private String iv;
 }

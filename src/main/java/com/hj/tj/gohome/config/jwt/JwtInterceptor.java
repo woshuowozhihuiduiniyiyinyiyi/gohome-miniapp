@@ -1,5 +1,7 @@
 package com.hj.tj.gohome.config.jwt;
 
+import com.hj.tj.gohome.consts.OwnerConstants;
+import com.hj.tj.gohome.utils.OwnerContextHelper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 
 /**
  * 身份验证工具
@@ -26,9 +29,6 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
     private TokenHelper tokenHelper;
 
     public static final String BEARER = "Bearer ";
-    private static final String AUTHORIZED_USER_FROM = "from";
-    private static final String AUTHORIZED_USER_ID = "userId";
-    private static final String AUTHORIZED_USER_NICKNAME = "nickName";
 
     /**
      * 身份过滤验证
@@ -51,9 +51,13 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
         try {
             Claims claims = tokenHelper.parser(token);
-            request.setAttribute(AUTHORIZED_USER_FROM, claims.get("from"));
-            request.setAttribute(AUTHORIZED_USER_ID, claims.get("uid"));
-            request.setAttribute(AUTHORIZED_USER_NICKNAME, claims.get("nickName"));
+
+            HashMap<String, Object> map = new HashMap<>(3);
+            map.put(OwnerConstants.OWNER_ID, claims.get(OwnerConstants.OWNER_ID));
+            map.put(OwnerConstants.NICKNIME, claims.get(OwnerConstants.NICKNIME));
+            map.put(OwnerConstants.FROM, claims.get(OwnerConstants.FROM));
+
+            OwnerContextHelper.putOwner(map);
         } catch (ExpiredJwtException e) {
             log.error("Auth code expired.authHeader:{}", authHeader);
             response.setStatus(HttpStatus.PAYMENT_REQUIRED.value());

@@ -12,4 +12,6 @@ public interface OwnerService {
      * @return
      */
     WxLoginResObj login(WxLoginReqObj wxLoginReqObj) throws Exception;
+
+    String refreshToken(String code) throws Exception;
 }

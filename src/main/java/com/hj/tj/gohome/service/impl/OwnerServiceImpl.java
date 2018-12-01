@@ -4,16 +4,17 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.hj.tj.gohome.config.WxMaConfiguration;
+import com.hj.tj.gohome.config.handler.ServiceException;
+import com.hj.tj.gohome.config.handler.ServiceExceptionEnum;
 import com.hj.tj.gohome.config.jwt.TokenHelper;
+import com.hj.tj.gohome.consts.OwnerConstants;
 import com.hj.tj.gohome.entity.Owner;
-import com.hj.tj.gohome.enums.ErrorMsgEnum;
-import com.hj.tj.gohome.exception.CustomException;
+import com.hj.tj.gohome.enums.StatusEnum;
 import com.hj.tj.gohome.mapper.OwnerMapper;
 import com.hj.tj.gohome.service.OwnerService;
 import com.hj.tj.gohome.vo.login.WxLoginReqObj;
 import com.hj.tj.gohome.vo.login.WxLoginResObj;
-import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,11 +40,12 @@ public class OwnerServiceImpl implements OwnerService {
                 wxLoginReqObj.getEncryptedData(), wxLoginReqObj.getIv());
 
         if (Objects.isNull(userInfo)) {
-            throw new CustomException(ErrorMsgEnum.GET_WX_UER_INFO_ERROR);
+            throw new ServiceException(ServiceExceptionEnum.WX_GET_USER_ERROR);
         }
 
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("open_id", userInfo.getOpenId());
+        queryWrapper.eq("status", StatusEnum.UN_DELETE.getStatus());
         Owner owner = ownerMapper.selectOne(queryWrapper);
         if (Objects.isNull(owner)) {
             owner = new Owner();
@@ -55,12 +57,28 @@ public class OwnerServiceImpl implements OwnerService {
         }
 
         WxLoginResObj wxLoginResObj = new WxLoginResObj();
-        wxLoginResObj.setId(1);
-        wxLoginResObj.setNickname("唐杰");
+        wxLoginResObj.setId(owner.getId());
+        wxLoginResObj.setNickname(owner.getWxNickname());
         wxLoginResObj.setAvatarUrl(owner.getAvatarUrl());
 
-        wxLoginResObj.setSid(tokenHelper.generate(1, "miniapp", owner.getWxNickname()));
+        wxLoginResObj.setToken(tokenHelper.generate(1, OwnerConstants.FROM_MINIAPP, owner.getWxNickname()));
 
         return wxLoginResObj;
+    }
+
+    @Override
+    public String refreshToken(String code) throws Exception {
+        WxMaJscode2SessionResult session = wxMaService.getUserService().getSessionInfo(code);
+
+        QueryWrapper<Owner> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("open_id", session.getOpenid());
+        Owner owner = ownerMapper.selectOne(queryWrapper);
+        if(Objects.isNull(owner)){
+            throw new ServiceException(ServiceExceptionEnum.OWNER_NOT_EXISTS);
+        }
+
+        String sid = tokenHelper.generate(owner.getId(), "miniapp", owner.getWxNickname());
+
+        return sid;
     }
 }

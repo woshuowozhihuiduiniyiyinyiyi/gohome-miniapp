@@ -29,7 +29,7 @@ spring:
   profiles: dev
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/gohome
+    url: jdbc:mysql://127.0.0.1:3306/gohome?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 821075358q
     driver-class-name: com.mysql.jdbc.Driver
@@ -37,6 +37,5 @@ spring:
 
 logging:
   config: classpath:logback.xml
-server:
-  port: 8080
+
 
