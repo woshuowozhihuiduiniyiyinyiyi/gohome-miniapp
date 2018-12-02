@@ -18,12 +18,14 @@ public class PassengerResObj {
     /**
      * 乘客类型
      */
-    private String type;
+    private Integer type;
+    private String typeStr;
 
     /**
      * 乘客证件类型
      */
-    private String idCardType;
+    private Integer idCardType;
+    private String idCardTypeStr;
 
     /**
      * 乘客证件

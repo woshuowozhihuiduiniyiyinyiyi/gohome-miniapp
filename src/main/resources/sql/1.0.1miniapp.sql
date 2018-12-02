@@ -54,5 +54,14 @@ ADD COLUMN `creator`  varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT
 ADD COLUMN `updater`  varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '修改人' AFTER `creator`;
 
 
+#5.修改订单表
+ALTER TABLE `order`
+ADD COLUMN `expect_date`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户预定日期' AFTER `destination`,
+ADD COLUMN `phone`  varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '订单联系手机号' AFTER `robbing_ticket_user_id`,
+ADD COLUMN `can_buy_ticket_later`  char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'N' COMMENT '是否接受上车补票' AFTER `phone`,
+MODIFY COLUMN `departure_date`  datetime NULL COMMENT '出发日期' AFTER `expect_date`;
+
+
+
 
 

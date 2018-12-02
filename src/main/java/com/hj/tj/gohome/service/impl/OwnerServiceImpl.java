@@ -61,7 +61,7 @@ public class OwnerServiceImpl implements OwnerService {
         wxLoginResObj.setNickname(owner.getWxNickname());
         wxLoginResObj.setAvatarUrl(owner.getAvatarUrl());
 
-        wxLoginResObj.setToken(tokenHelper.generate(1, OwnerConstants.FROM_MINIAPP, owner.getWxNickname()));
+        wxLoginResObj.setToken(tokenHelper.generate(owner.getId(), OwnerConstants.FROM_MINIAPP, owner.getWxNickname()));
 
         return wxLoginResObj;
     }

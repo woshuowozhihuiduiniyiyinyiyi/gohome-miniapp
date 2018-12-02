@@ -2,6 +2,7 @@ package com.hj.tj.gohome;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hj.tj.gohome.entity.Owner;
+import com.hj.tj.gohome.enums.StatusEnum;
 import com.hj.tj.gohome.mapper.OwnerMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,5 +46,16 @@ public class OwnerServiceTest {
         Owner owner = ownerMapper.selectOne(queryWrapper);
 
         System.out.println(owner);
+    }
+
+    @Test
+    public void testUpdate(){
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("wx_account", "Tackey-takki");
+
+        Owner owner = new Owner();
+        owner.setStatus(StatusEnum.DELETED.getStatus());
+
+        ownerMapper.update(owner, queryWrapper);
     }
 }

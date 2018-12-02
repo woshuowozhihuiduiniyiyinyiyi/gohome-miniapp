@@ -99,12 +99,12 @@ public class PassengerServiceImpl implements PassengerService {
 
         IdCardTypeEnum idCardTypeEnum = IdCardTypeEnum.getIdCardTypeEnumByType(passenger.getIdCardType());
         if(Objects.nonNull(idCardTypeEnum)){
-            passengerResObj.setIdCardType(idCardTypeEnum.getDescription());
+            passengerResObj.setIdCardTypeStr(idCardTypeEnum.getDescription());
         }
 
         PassengerTypeEnum passengerTypeEnum = PassengerTypeEnum.getPassengerTypeEnumByType(passenger.getType());
         if(Objects.nonNull(passengerTypeEnum)){
-            passengerResObj.setType(passengerTypeEnum.getDescription());
+            passengerResObj.setTypeStr(passengerTypeEnum.getDescription());
         }
 
         return  passengerResObj;
