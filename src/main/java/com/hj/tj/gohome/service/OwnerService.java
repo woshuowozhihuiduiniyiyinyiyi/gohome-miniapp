@@ -13,5 +13,20 @@ public interface OwnerService {
      */
     WxLoginResObj login(WxLoginReqObj wxLoginReqObj) throws Exception;
 
+    /**
+     * 刷新token
+     *
+     * @param code 微信返回的code
+     * @return
+     * @throws Exception
+     */
     String refreshToken(String code) throws Exception;
+
+    /**
+     * 生成游客
+     *
+     * @return
+     * @throws Exception
+     */
+    String createTourist() throws Exception;
 }

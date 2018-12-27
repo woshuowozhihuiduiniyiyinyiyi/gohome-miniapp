@@ -32,4 +32,11 @@ public class OwnerController {
         return ResponseEntity.ok(sid);
     }
 
+    @GetMapping("/owner/create/tourist")
+    public ResponseEntity createTourist() throws Exception {
+        String sid = ownerService.createTourist();
+
+        return ResponseEntity.ok(sid);
+    }
+
 }

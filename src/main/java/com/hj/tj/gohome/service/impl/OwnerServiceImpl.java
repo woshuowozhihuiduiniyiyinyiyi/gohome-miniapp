@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.Objects;
 
 @Service
@@ -78,6 +79,17 @@ public class OwnerServiceImpl implements OwnerService {
         }
 
         String sid = tokenHelper.generate(owner.getId(), "miniapp", owner.getWxNickname());
+
+        return sid;
+    }
+
+    @Override
+    public String createTourist() throws Exception {
+        Owner owner = new Owner();
+        owner.setCreatedAt(new Date());
+        ownerMapper.insert(owner);
+
+        String sid = tokenHelper.generate(owner.getId(), "h5", "");
 
         return sid;
     }
