@@ -1,7 +1,6 @@
 package com.hj.tj.gohome.controller;
 
 import com.hj.tj.gohome.service.OwnerService;
-import com.hj.tj.gohome.utils.JSONUtils;
 import com.hj.tj.gohome.vo.login.WxLoginReqObj;
 import com.hj.tj.gohome.vo.login.WxLoginResObj;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 @RestController

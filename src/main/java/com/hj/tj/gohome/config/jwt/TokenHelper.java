@@ -28,11 +28,6 @@ public class TokenHelper {
      */
     private long expire;
 
-    /**
-     * 用户凭证
-     */
-    private String header;
-
     public static final String BEARER = "Bearer ";
 
     /**
