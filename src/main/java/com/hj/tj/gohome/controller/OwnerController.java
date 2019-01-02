@@ -3,6 +3,7 @@ package com.hj.tj.gohome.controller;
 import com.hj.tj.gohome.service.OwnerService;
 import com.hj.tj.gohome.vo.login.WxLoginReqObj;
 import com.hj.tj.gohome.vo.login.WxLoginResObj;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +30,14 @@ public class OwnerController {
     public ResponseEntity refreshToken(@NotBlank(message = "微信code 不能为空") @PathVariable("code") String code) throws Exception {
         String sid = ownerService.refreshToken(code);
 
-        return ResponseEntity.ok(sid);
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, sid).build();
     }
 
     @GetMapping("/owner/create/tourist")
     public ResponseEntity createTourist() throws Exception {
         String sid = ownerService.createTourist();
 
-        return ResponseEntity.ok(sid);
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, sid).build();
     }
 
 }
