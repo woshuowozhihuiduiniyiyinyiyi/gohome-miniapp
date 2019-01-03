@@ -22,7 +22,7 @@ import java.io.IOException;
 public class CorsFilter implements Filter {
 
     private static final String ACCESS_CONTROL_ALLOW_HEADERS = "User-Agent,Origin,Cache-Control,Content-type,Date,Server," +
-            "withCredentials,access_token,x_requested_with,x-requested-with,Content-Type,sysCode";
+            "withCredentials,x_requested_with,x-requested-with,Content-Type,Authorization";
 
     private static final String ACCESS_CONTROL_ALLOW_METHODS = "OPTIONS,GET,POST,DELETE,PUT";
 
@@ -38,22 +38,23 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
-            response.setStatus(HttpStatus.OK.value());
-            return;
-        }
+//        String originHeader = request.getHeader(HttpHeaders.ORIGIN);
+//        if (StringUtil.isBlank(originHeader)) {
+//            originHeader = "*";
+//        }
 
-        String originHeader = request.getHeader(HttpHeaders.ORIGIN);
-        if (StringUtil.isBlank(originHeader)) {
-            originHeader = "*";
-        }
-
-        response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, originHeader);
+        response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
         response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
         response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, ACCESS_CONTROL_ALLOW_HEADERS);
         response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, ACCESS_CONTROL_ALLOW_METHODS);
         response.addHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, DEFAULT_MAX_AGE);
+
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            response.setStatus(HttpStatus.OK.value());
+            return;
+        }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
