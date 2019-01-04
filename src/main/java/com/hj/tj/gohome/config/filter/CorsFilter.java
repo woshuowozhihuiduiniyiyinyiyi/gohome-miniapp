@@ -1,6 +1,5 @@
-package com.hj.tj.gohome.filter;
+package com.hj.tj.gohome.config.filter;
 
-import com.hj.tj.gohome.utils.StringUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
