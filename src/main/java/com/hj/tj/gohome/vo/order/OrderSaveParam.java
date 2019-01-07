@@ -60,7 +60,6 @@ public class OrderSaveParam {
     /**
      * 微信号
      */
-    @NotBlank(message = "微信号不能为空")
     private String wxAccount;
 
     /**
