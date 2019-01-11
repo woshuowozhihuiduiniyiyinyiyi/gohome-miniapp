@@ -20,7 +20,7 @@ auth:
 #默认使用配置
 spring:
   profiles:
-    active: test
+    active: prod
 
 
 logging:
