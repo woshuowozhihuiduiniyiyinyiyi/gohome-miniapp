@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orderList = orderMapper.selectList(orderQueryWrapper);
         if (!CollectionUtils.isEmpty(orderList)) {
             for (Order order : orderList) {
-                if (Math.abs(order.getCreatedAt().getTime() - System.currentTimeMillis()) >= 3000) {
+                if (Math.abs(order.getCreatedAt().getTime() - System.currentTimeMillis()) <= 30000) {
                     throw new ServiceException(ServiceExceptionEnum.ORDER_REPEAT);
                 }
             }
