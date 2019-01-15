@@ -20,13 +20,12 @@ auth:
 #默认使用配置
 spring:
   profiles:
-    active: prod
+    active: test
 
 
 logging:
   config: classpath:logback.xml
 server:
-  port: 8081
   servlet:
     context-path: /gohomeapp
 
@@ -41,6 +40,8 @@ spring:
     password: 821075358q
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+server:
+  port: 8091
 
 ---
 #测试配置
@@ -53,7 +54,8 @@ spring:
     password: huijia931
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-
+server:
+  port: 8091
 
 ---
 #线上配置
@@ -66,3 +68,5 @@ spring:
     password: huijia931
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+server:
+  port: 8081

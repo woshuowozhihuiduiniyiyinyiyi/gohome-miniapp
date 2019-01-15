@@ -21,6 +21,8 @@ public enum ServiceExceptionEnum {
 
     OWNER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "业主不存在"),
 
+    ORDER_REPEAT(HttpStatus.FORBIDDEN, "请勿在30秒内提交相同定单"),
+
     ;
 
     /**

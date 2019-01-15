@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class GoHomeMiniAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GoHomeMiniAppApplication.class);
+        SpringApplication.run(GoHomeMiniAppApplication.class, args);
     }
 
 }

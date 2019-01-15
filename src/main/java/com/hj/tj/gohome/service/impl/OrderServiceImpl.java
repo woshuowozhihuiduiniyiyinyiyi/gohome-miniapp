@@ -16,6 +16,7 @@ import com.hj.tj.gohome.vo.order.OrderSaveParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -38,6 +39,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer saveOrder(OrderSaveParam orderSaveParam) {
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.eq("owner_id", OwnerContextHelper.getOwnerId());
+        orderQueryWrapper.eq("origin", orderSaveParam.getOrigin());
+        orderQueryWrapper.eq("destination", orderSaveParam.getDestination());
+        orderQueryWrapper.eq("expect_date", orderSaveParam.getExpectDate());
+        orderQueryWrapper.eq("train_number", orderSaveParam.getTrainNumber());
+        orderQueryWrapper.eq("status", 1);
+        List<Order> orderList = orderMapper.selectList(orderQueryWrapper);
+        if (!CollectionUtils.isEmpty(orderList)) {
+            for (Order order : orderList) {
+                if (Math.abs(order.getCreatedAt().getTime() - System.currentTimeMillis()) >= 3000) {
+                    throw new ServiceException(ServiceExceptionEnum.ORDER_REPEAT);
+                }
+            }
+        }
+
         Order order = new Order();
         BeanUtils.copyProperties(orderSaveParam, order);
 
@@ -45,16 +62,17 @@ public class OrderServiceImpl implements OrderService {
         order.setOwnerId(OwnerContextHelper.getOwnerId());
         order.setUpdater(OwnerContextHelper.getOwnerId().toString());
 
-        if (!StringUtils.isEmpty(orderSaveParam.getWxAccount())) {
-            Owner owner = ownerMapper.selectById(OwnerContextHelper.getOwnerId());
-            if (Objects.isNull(owner)) {
-                throw new ServiceException(ServiceExceptionEnum.OWNER_NOT_EXISTS);
-            }
-            owner.setWxAccount(orderSaveParam.getWxAccount());
-            owner.setUpdatedAt(new Date());
-
-            ownerMapper.updateById(owner);
+        Owner owner = ownerMapper.selectById(OwnerContextHelper.getOwnerId());
+        if (Objects.isNull(owner)) {
+            throw new ServiceException(ServiceExceptionEnum.OWNER_NOT_EXISTS);
         }
+        if (!StringUtils.isEmpty(orderSaveParam.getWxAccount())) {
+            owner.setWxAccount(orderSaveParam.getWxAccount());
+        }
+        owner.setPhone(orderSaveParam.getPhone());
+        owner.setUpdatedAt(new Date());
+
+        ownerMapper.updateById(owner);
 
         if (Objects.nonNull(order.getId())) {
             // 更新
