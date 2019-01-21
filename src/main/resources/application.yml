@@ -17,17 +17,20 @@ auth:
     expire: 2592000
     header: 22f4830ec0a499683c117136444bb6b6
 
+
 #默认使用配置
 spring:
   profiles:
     active: test
 
-
-logging:
-  config: classpath:logback.xml
 server:
   servlet:
     context-path: /gohomeapp
+  port: 443
+
+server.ssl.key-store: classpath:1614217_www.home931.top.pfx
+server.ssl.key-store-password: 0r8jLO79
+server.ssl.keyStoreType: PKCS12
 
 ---
 #开发配置

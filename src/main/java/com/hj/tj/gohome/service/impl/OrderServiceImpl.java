@@ -41,15 +41,19 @@ public class OrderServiceImpl implements OrderService {
     public Integer saveOrder(OrderSaveParam orderSaveParam) {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
         orderQueryWrapper.eq("owner_id", OwnerContextHelper.getOwnerId());
-        orderQueryWrapper.eq("origin", orderSaveParam.getOrigin());
-        orderQueryWrapper.eq("destination", orderSaveParam.getDestination());
-        orderQueryWrapper.eq("expect_date", orderSaveParam.getExpectDate());
-        orderQueryWrapper.eq("train_number", orderSaveParam.getTrainNumber());
-        orderQueryWrapper.eq("status", 1);
         List<Order> orderList = orderMapper.selectList(orderQueryWrapper);
         if (!CollectionUtils.isEmpty(orderList)) {
             for (Order order : orderList) {
-                if (Math.abs(order.getCreatedAt().getTime() - System.currentTimeMillis()) <= 30000) {
+                if (Math.abs(order.getCreatedAt().getTime() - System.currentTimeMillis()) <= 10000) {
+                    throw new ServiceException(ServiceExceptionEnum.ORDER_TIME_LIMIT);
+                }
+
+                if (Objects.equals(order.getOrigin(), orderSaveParam.getOrigin())
+                        && Objects.equals(order.getDestination(), orderSaveParam.getDestination())
+                        && Objects.equals(order.getExpectDate(), orderSaveParam.getExpectDate())
+                        && Objects.equals(order.getTrainNumber(), orderSaveParam.getTrainNumber())
+                        && Objects.equals(order.getStatus(), 1)
+                        && Math.abs(order.getCreatedAt().getTime() - System.currentTimeMillis()) <= 30000) {
                     throw new ServiceException(ServiceExceptionEnum.ORDER_REPEAT);
                 }
             }
