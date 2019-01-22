@@ -66,4 +66,9 @@ public class OrderSaveParam {
      * 是否接受上车补票，N不接受，Y接受
      */
     private String canBuyTicketLater = "N";
+
+    /**
+     * 抢票价格
+     */
+    private Double price;
 }

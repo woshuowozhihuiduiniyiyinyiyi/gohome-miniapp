@@ -78,6 +78,11 @@ public class OrderServiceImpl implements OrderService {
 
         ownerMapper.updateById(owner);
 
+        if (Objects.nonNull(orderSaveParam.getPrice())) {
+            Double price = orderSaveParam.getPrice() * 100;
+            order.setPrice(price.intValue());
+        }
+
         if (Objects.nonNull(order.getId())) {
             // 更新
             order.setUpdatedAt(new Date());
