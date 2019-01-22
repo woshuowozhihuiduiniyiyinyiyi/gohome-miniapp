@@ -1,8 +1,8 @@
 #微信相关配置
 wx:
   miniapp:
-    appid: wx537a618967b5ffa5
-    secret: e7d854cc241187155591f3dd1fae499c
+    appid: wx379d5951147e403e
+    secret: 4f18f8ba07de2542a08b3452f576aa44
     token: e6170e0539b8bd0e429f4dc5d8fc5eff
     aesKey: Dx5LcP76CvL0JOE5jmqjNExAV2uAYIwhgbpv390itN7
     msgDataFormat: JSON
