@@ -38,11 +38,9 @@ spring:
   profiles: dev
 
   datasource:
-    url: jdbc:mysql://localhost:3306/gohome?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/gohome?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: 821075358q
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
 server:
   port: 8091
 
@@ -52,11 +50,9 @@ spring:
   profiles: test
 
   datasource:
-    url: jdbc:mysql://cdb-96qh7ip0.cd.tencentcdb.com:10022/gohome_test?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://cdb-96qh7ip0.cd.tencentcdb.com:10022/gohome_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: huijia931
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
 server:
   port: 8091
 
@@ -66,10 +62,8 @@ spring:
   profiles: prod
 
   datasource:
-    url: jdbc:mysql://cdb-96qh7ip0.cd.tencentcdb.com:10022/gohome?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://cdb-96qh7ip0.cd.tencentcdb.com:10022/gohome?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: huijia931
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
 server:
   port: 8081

@@ -127,9 +127,10 @@
 
     <logger name="org.springframework.scheduling"  level="error" />
     <Logger name="org.springframework" level="info" />
-    <logger name="com.lzw" level="debug" />
+    <logger name="com.lzw" level="info" />
     <logger name="org.mybatis" level="warn" />
     <logger name="org.apache" level="ERROR" />
     <logger name="org.hibernate" level="ERROR" />
+    <logger name="com.zaxxer.hikari" level="INFO" />
 
 </configuration>
