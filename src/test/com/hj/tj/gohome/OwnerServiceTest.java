@@ -58,4 +58,13 @@ public class OwnerServiceTest {
 
         ownerMapper.update(owner, queryWrapper);
     }
+
+    @Test
+    public void testUpdateById(){
+        Owner owner = new Owner();
+        owner.setId(118);
+        owner.setWxAccount("fdsafggd");
+
+        ownerMapper.updateById(owner);
+    }
 }
